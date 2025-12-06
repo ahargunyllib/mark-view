@@ -9,6 +9,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 
+// biome-ignore lint/style/noNonNullAssertion: false positive
 const elem = document.getElementById("root")!;
 const app = (
   <StrictMode>
@@ -18,6 +19,7 @@ const app = (
 
 if (import.meta.hot) {
   // With hot module reloading, `import.meta.hot.data` is persisted.
+  // biome-ignore lint/suspicious/noAssignInExpressions: false positive
   const root = (import.meta.hot.data.root ??= createRoot(elem));
   root.render(app);
 } else {

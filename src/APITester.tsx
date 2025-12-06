@@ -1,7 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { useRef, type FormEvent } from "react";
 
@@ -10,6 +16,10 @@ export function APITester() {
 
   const testEndpoint = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!responseInputRef.current) {
+      return;
+    }
 
     try {
       const form = e.currentTarget;
@@ -20,19 +30,19 @@ export function APITester() {
       const res = await fetch(url, { method });
 
       const data = await res.json();
-      responseInputRef.current!.value = JSON.stringify(data, null, 2);
+      responseInputRef.current.value = JSON.stringify(data, null, 2);
     } catch (error) {
-      responseInputRef.current!.value = String(error);
+      responseInputRef.current.value = String(error);
     }
   };
 
   return (
     <div className="flex flex-col gap-6">
-      <form onSubmit={testEndpoint} className="flex items-center gap-2">
-        <Label htmlFor="method" className="sr-only">
+      <form className="flex items-center gap-2" onSubmit={testEndpoint}>
+        <Label className="sr-only" htmlFor="method">
           Method
         </Label>
-        <Select name="method" defaultValue="GET">
+        <Select defaultValue="GET" name="method">
           <SelectTrigger className="w-[100px]" id="method">
             <SelectValue placeholder="Method" />
           </SelectTrigger>
@@ -41,23 +51,29 @@ export function APITester() {
             <SelectItem value="PUT">PUT</SelectItem>
           </SelectContent>
         </Select>
-        <Label htmlFor="endpoint" className="sr-only">
+        <Label className="sr-only" htmlFor="endpoint">
           Endpoint
         </Label>
-        <Input id="endpoint" type="text" name="endpoint" defaultValue="/api/hello" placeholder="/api/hello" />
+        <Input
+          defaultValue="/api/hello"
+          id="endpoint"
+          name="endpoint"
+          placeholder="/api/hello"
+          type="text"
+        />
         <Button type="submit" variant="secondary">
           Send
         </Button>
       </form>
-      <Label htmlFor="response" className="sr-only">
+      <Label className="sr-only" htmlFor="response">
         Response
       </Label>
       <Textarea
-        ref={responseInputRef}
+        className="min-h-[140px] resize-y font-mono"
         id="response"
-        readOnly
         placeholder="Response will appear here..."
-        className="min-h-[140px] font-mono resize-y"
+        readOnly
+        ref={responseInputRef}
       />
     </div>
   );
