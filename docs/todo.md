@@ -99,60 +99,60 @@ MarkView is a lightweight web app that generates readable documentation from Git
 
 ---
 
-### Epic 3: Backend API Routes & Caching
+### Epic 3: Backend API Routes & Caching ✅ COMPLETED
 
 **Goal:** Create Next.js-style API routes using Bun.serve()
 
 #### 3.1 Cache Infrastructure
-- [ ] Create `src/lib/cache.ts`:
-  - [ ] Implement LRU cache wrapper
-  - [ ] Define cache key strategy (repo+ref+path)
-  - [ ] Set cache size limits (e.g., 100MB)
-  - [ ] Add TTL configuration (5-10 minutes)
-  - [ ] Create cache utility functions (get, set, invalidate)
+- [x] Create `src/lib/cache.ts`:
+  - [x] Implement LRU cache wrapper
+  - [x] Define cache key strategy (repo+ref+path)
+  - [x] Set cache size limits (e.g., 100MB)
+  - [x] Add TTL configuration (5-10 minutes)
+  - [x] Create cache utility functions (get, set, invalidate)
 
 #### 3.2 API Route: Repository Validation
-- [ ] Create `POST /api/repository/validate` route:
-  - [ ] Accept JSON body: `{ owner, repo, ref? }`
-  - [ ] Validate input parameters
-  - [ ] Call GitHub client to validate repository
-  - [ ] Return validation result + repository metadata
-  - [ ] Handle errors with appropriate HTTP status codes
-  - [ ] Add request/response logging
+- [x] Create `POST /api/repository/validate` route:
+  - [x] Accept JSON body: `{ owner, repo, ref? }`
+  - [x] Validate input parameters
+  - [x] Call GitHub client to validate repository
+  - [x] Return validation result + repository metadata
+  - [x] Handle errors with appropriate HTTP status codes
+  - [x] Add request/response logging
 
 #### 3.3 API Route: File List
-- [ ] Create `POST /api/repository/files` route:
-  - [ ] Accept JSON body: `{ owner, repo, ref? }`
-  - [ ] Fetch file tree from GitHub
-  - [ ] Cache file tree with ETag
-  - [ ] Return list of markdown files with metadata
-  - [ ] Handle pagination if needed
-  - [ ] Add cache headers to response
+- [x] Create `POST /api/repository/files` route:
+  - [x] Accept JSON body: `{ owner, repo, ref? }`
+  - [x] Fetch file tree from GitHub
+  - [x] Cache file tree with ETag
+  - [x] Return list of markdown files with metadata
+  - [x] Handle pagination if needed
+  - [x] Add cache headers to response
 
 #### 3.4 API Route: File Content
-- [ ] Create `POST /api/repository/content` route:
-  - [ ] Accept JSON body: `{ owner, repo, ref?, path }`
-  - [ ] Fetch file content from GitHub
-  - [ ] Cache content with ETag
-  - [ ] Return raw markdown content
-  - [ ] Handle large files (streaming if needed)
-  - [ ] Add cache headers to response
+- [x] Create `POST /api/repository/content` route:
+  - [x] Accept JSON body: `{ owner, repo, ref?, path }`
+  - [x] Fetch file content from GitHub
+  - [x] Cache content with ETag
+  - [x] Return raw markdown content
+  - [x] Handle large files (streaming if needed)
+  - [x] Add cache headers to response
 
 #### 3.5 API Route: Rate Limit Status
-- [ ] Create `GET /api/rate-limit` route:
-  - [ ] Fetch and return current rate limit status
-  - [ ] Return remaining calls, limit, and reset time
-  - [ ] Cache for 60 seconds
+- [x] Create `GET /api/rate-limit` route:
+  - [x] Fetch and return current rate limit status
+  - [x] Return remaining calls, limit, and reset time
+  - [x] Cache for 60 seconds
 
 #### 3.6 Error Handling
-- [ ] Create standardized error response format
-- [ ] Handle GitHub API errors:
-  - [ ] 404 Repository Not Found
-  - [ ] 403 Rate Limit Exceeded
-  - [ ] 403 Private Repository (forbidden)
-  - [ ] Network errors (timeout, offline)
-  - [ ] 500 GitHub server errors
-- [ ] Add error logging for debugging
+- [x] Create standardized error response format
+- [x] Handle GitHub API errors:
+  - [x] 404 Repository Not Found
+  - [x] 403 Rate Limit Exceeded
+  - [x] 403 Private Repository (forbidden)
+  - [x] Network errors (timeout, offline)
+  - [x] 500 GitHub server errors
+- [x] Add error logging for debugging
 
 ---
 
