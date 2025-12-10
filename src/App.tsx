@@ -6,7 +6,9 @@ import { RepositoryInput } from "@/components/RepositoryInput";
 import {
   ContentSkeleton,
   FileListSkeleton,
+  TOCSkeleton,
 } from "@/components/SkeletonLoaders";
+import { TableOfContents, useScrollSpy } from "@/components/TableOfContents";
 import {
   Card,
   CardContent,
@@ -15,6 +17,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
+import { flattenToc, generateToc } from "@/lib/markdown/toc";
+import { useMemo } from "react";
 import { useState } from "react";
 import "./index.css";
 import "./styles/markdown.css";
@@ -166,6 +170,23 @@ export function App() {
     }
   };
 
+  // Generate TOC from file content
+  const toc = useMemo(() => {
+    if (!state.fileContent) {
+      return [];
+    }
+    return generateToc(state.fileContent);
+  }, [state.fileContent]);
+
+  // Get flat list of heading IDs for scroll spy
+  const headingIds = useMemo(
+    () => flattenToc(toc).map((item) => item.id),
+    [toc]
+  );
+
+  // Track active heading with scroll spy
+  const activeId = useScrollSpy(headingIds);
+
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
@@ -258,17 +279,23 @@ export function App() {
           </Card>
         </main>
 
-        {/* Table of Contents - Placeholder */}
+        {/* Table of Contents */}
         <aside className="w-64 shrink-0">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Table of Contents</CardTitle>
             </CardHeader>
             <CardContent>
-              <EmptyState
-                message="TOC will appear here when viewing a file"
-                type="no-repo"
-              />
+              {state.isLoadingContent ? (
+                <TOCSkeleton />
+              ) : state.fileContent ? (
+                <TableOfContents activeId={activeId} toc={toc} />
+              ) : (
+                <EmptyState
+                  message="TOC will appear here when viewing a file"
+                  type="no-repo"
+                />
+              )}
             </CardContent>
           </Card>
         </aside>
