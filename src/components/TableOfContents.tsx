@@ -28,7 +28,7 @@ function TocItemComponent({
     // Smooth scroll to element
     const element = document.getElementById(item.id);
     if (element) {
-      const yOffset = -80; // Offset for fixed header
+      const yOffset = -40; // Offset for fixed header
       const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
 
       window.scrollTo({ top: y, behavior: "smooth" });
