@@ -27,25 +27,25 @@ MarkView is a lightweight web app that generates readable documentation from Git
 
 ## 🚀 MVP Development Tasks
 
-### Epic 1: Project Cleanup & Dependencies
+### Epic 1: Project Cleanup & Dependencies ✅ COMPLETED
 
 **Goal:** Remove demo code and install required dependencies for MarkView
 
-- [ ] Remove demo `APITester.tsx` component
-- [ ] Clean up demo API routes from `src/index.tsx`
-- [ ] Update `App.tsx` to MarkView layout structure
-- [ ] Install markdown rendering dependencies:
-  - [ ] `react-markdown`
-  - [ ] `remark-gfm` (GitHub Flavored Markdown)
-  - [ ] `rehype-raw` (support HTML in markdown)
-- [ ] Install syntax highlighting:
-  - [ ] `shiki` or `rehype-prism-plus`
-- [ ] Install additional UI components needed:
-  - [ ] Add more shadcn/ui components (Tabs, ScrollArea, Separator, Toast)
-- [ ] Install utilities:
-  - [ ] LRU cache library (e.g., `lru-cache`)
-- [ ] Update README.md with MarkView description
-- [ ] Create `.env.example` with GitHub token placeholder
+- [x] Remove demo `APITester.tsx` component
+- [x] Clean up demo API routes from `src/index.tsx`
+- [x] Update `App.tsx` to MarkView layout structure
+- [x] Install markdown rendering dependencies:
+  - [x] `react-markdown`
+  - [x] `remark-gfm` (GitHub Flavored Markdown)
+  - [x] `rehype-raw` (support HTML in markdown)
+- [x] Install syntax highlighting:
+  - [x] `shiki` or `rehype-prism-plus`
+- [x] Install additional UI components needed:
+  - [x] Add more shadcn/ui components (Tabs, ScrollArea, Separator, Sonner - Toast replacement)
+- [x] Install utilities:
+  - [x] LRU cache library (e.g., `lru-cache`)
+- [x] Update README.md with MarkView description
+- [x] Create `.env.example` with GitHub token placeholder
 
 ---
 
