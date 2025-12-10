@@ -49,53 +49,53 @@ MarkView is a lightweight web app that generates readable documentation from Git
 
 ---
 
-### Epic 2: GitHub API Integration
+### Epic 2: GitHub API Integration ✅ COMPLETED
 
 **Goal:** Build typed GitHub REST API client for fetching repository data
 
 #### 2.1 Research & Setup
-- [ ] Create `src/lib/github/` directory structure
-- [ ] Create `src/lib/github/types.ts` for GitHub API type definitions
-- [ ] Document GitHub API endpoints needed:
-  - [ ] Repository validation: `GET /repos/:owner/:repo`
-  - [ ] Git Tree API: `GET /repos/:owner/:repo/git/trees/:ref?recursive=1`
-  - [ ] File contents: `GET /repos/:owner/:repo/contents/:path`
-  - [ ] Rate limit: `GET /rate_limit`
+- [x] Create `src/lib/github/` directory structure
+- [x] Create `src/lib/github/types.ts` for GitHub API type definitions
+- [x] Document GitHub API endpoints needed:
+  - [x] Repository validation: `GET /repos/:owner/:repo`
+  - [x] Git Tree API: `GET /repos/:owner/:repo/git/trees/:ref?recursive=1`
+  - [x] File contents: `GET /repos/:owner/:repo/contents/:path`
+  - [x] Rate limit: `GET /rate_limit`
 
 #### 2.2 Core GitHub Client
-- [ ] Create `src/lib/github/client.ts`:
-  - [ ] Base GitHub API client class
-  - [ ] Configure GitHub token from env vars
-  - [ ] Add request headers (Accept, User-Agent, Authorization)
-  - [ ] Implement rate limit header parsing
-  - [ ] Create error handling wrapper
-  - [ ] Add TypeScript types for all responses
+- [x] Create `src/lib/github/client.ts`:
+  - [x] Base GitHub API client class
+  - [x] Configure GitHub token from env vars
+  - [x] Add request headers (Accept, User-Agent, Authorization)
+  - [x] Implement rate limit header parsing
+  - [x] Create error handling wrapper
+  - [x] Add TypeScript types for all responses
 
 #### 2.3 API Methods
-- [ ] `validateRepository(owner: string, repo: string)`:
-  - [ ] Check if repository exists and is accessible
-  - [ ] Handle 404 (not found) and 403 (private/forbidden) errors
-  - [ ] Return repository metadata (name, description, default branch)
-- [ ] `getFileTree(owner: string, repo: string, ref?: string)`:
-  - [ ] Fetch complete file tree recursively
-  - [ ] Filter to only `.md` and `.mdx` files
-  - [ ] Return array of file paths with metadata (sha, size, path)
-  - [ ] Handle large repositories (>1000 files)
-- [ ] `getFileContent(owner: string, repo: string, path: string, ref?: string)`:
-  - [ ] Fetch raw markdown content
-  - [ ] Decode base64 content from API response
-  - [ ] Handle large files
-  - [ ] Return raw markdown string
-- [ ] `getRateLimit()`:
-  - [ ] Fetch current rate limit status
-  - [ ] Return remaining calls and reset time
+- [x] `validateRepository(owner: string, repo: string)`:
+  - [x] Check if repository exists and is accessible
+  - [x] Handle 404 (not found) and 403 (private/forbidden) errors
+  - [x] Return repository metadata (name, description, default branch)
+- [x] `getFileTree(owner: string, repo: string, ref?: string)`:
+  - [x] Fetch complete file tree recursively
+  - [x] Filter to only `.md` and `.mdx` files
+  - [x] Return array of file paths with metadata (sha, size, path)
+  - [x] Handle large repositories (>1000 files)
+- [x] `getFileContent(owner: string, repo: string, path: string, ref?: string)`:
+  - [x] Fetch raw markdown content
+  - [x] Decode base64 content from API response
+  - [x] Handle large files
+  - [x] Return raw markdown string
+- [x] `getRateLimit()`:
+  - [x] Fetch current rate limit status
+  - [x] Return remaining calls and reset time
 
 #### 2.4 Caching & Optimization
-- [ ] Implement ETag support:
-  - [ ] Store ETags for resources
-  - [ ] Send If-None-Match headers
-  - [ ] Handle 304 Not Modified responses
-- [ ] Add unit tests for GitHub client methods
+- [x] Implement ETag support:
+  - [x] Store ETags for resources
+  - [x] Send If-None-Match headers
+  - [x] Handle 304 Not Modified responses
+- [ ] Add unit tests for GitHub client methods (deferred to Epic 9)
 
 ---
 
