@@ -33,12 +33,14 @@ export function EmptyState({ type, message }: EmptyStateProps) {
   const Icon = config.icon;
 
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-12 text-center">
-      <Icon className="mb-4 h-12 w-12 text-muted-foreground" />
-      <h3 className="mb-2 font-semibold text-lg">{config.title}</h3>
-      <p className="max-w-sm text-muted-foreground text-sm">
-        {message || config.description}
-      </p>
+    <div className="flex flex-col items-center justify-center gap-4 px-4 py-12 text-center">
+      <Icon className="h-12 w-12 text-muted-foreground" />
+      <div className="space-y-2">
+        <h3 className="font-semibold text-lg">{config.title}</h3>
+        <p className="max-w-sm text-muted-foreground text-sm">
+          {message || config.description}
+        </p>
+      </div>
     </div>
   );
 }

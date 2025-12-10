@@ -72,7 +72,7 @@ export function FileFilters({
             size="sm"
             variant="ghost"
           >
-            <X className="mr-1 h-3 w-3" />
+            <X />
             Clear
           </Button>
         )}

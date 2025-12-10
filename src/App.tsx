@@ -238,20 +238,18 @@ export function App() {
 
       {/* Repository Input */}
       <div className="border-b bg-muted/50">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto space-y-2 px-4 py-4">
           <RepositoryInput
             isLoading={state.isLoadingRepo}
             onLoadRepository={handleLoadRepository}
           />
           {state.error && (
-            <div className="mt-3">
-              <ErrorMessage
-                message={state.error.message}
-                onDismiss={() => setState((prev) => ({ ...prev, error: null }))}
-                suggestion={state.error.suggestion}
-                type={state.error.type}
-              />
-            </div>
+            <ErrorMessage
+              message={state.error.message}
+              onDismiss={() => setState((prev) => ({ ...prev, error: null }))}
+              suggestion={state.error.suggestion}
+              type={state.error.type}
+            />
           )}
         </div>
       </div>
@@ -308,8 +306,8 @@ export function App() {
 
         {/* Main Content - Markdown Viewer */}
         <main aria-label="Document viewer" className="min-w-0 flex-1">
-          <Card className="min-h-[600px]">
-            <CardContent className="overflow-x-auto pt-6">
+          <Card>
+            <CardContent className="overflow-x-auto">
               {state.isLoadingContent ? (
                 <ContentSkeleton />
               ) : state.fileContent &&
