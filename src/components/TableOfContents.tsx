@@ -1,4 +1,3 @@
-import { ScrollArea } from "@/components/ui/scroll-area";
 import type { TocItem } from "@/lib/markdown/toc";
 import { useEffect, useState } from "react";
 
@@ -84,20 +83,18 @@ export function TableOfContents({
   }
 
   return (
-    <ScrollArea className="h-[300px] lg:h-[calc(100vh-12rem)]">
-      <nav aria-label="Table of contents">
-        <ul className="space-y-0">
-          {toc.map((item) => (
-            <TocItemComponent
-              activeId={activeId}
-              item={item}
-              key={item.id}
-              onItemClick={onItemClick}
-            />
-          ))}
-        </ul>
-      </nav>
-    </ScrollArea>
+    <nav aria-label="Table of contents">
+      <ul className="space-y-0">
+        {toc.map((item) => (
+          <TocItemComponent
+            activeId={activeId}
+            item={item}
+            key={item.id}
+            onItemClick={onItemClick}
+          />
+        ))}
+      </ul>
+    </nav>
   );
 }
 

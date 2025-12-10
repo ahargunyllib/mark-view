@@ -7,6 +7,8 @@
   font-size: 16px;
   line-height: 1.6;
   word-wrap: break-word;
+  max-width: 100%;
+  overflow-wrap: break-word;
 }
 
 /* Headings */
@@ -124,6 +126,7 @@
   line-height: 1.45;
   background-color: hsl(var(--muted));
   border-radius: 6px;
+  max-width: 100%;
 }
 
 .markdown-body pre code {
@@ -142,6 +145,8 @@
 .markdown-body .code-block {
   position: relative;
   margin-bottom: 16px;
+  max-width: 100%;
+  overflow: auto;
 }
 
 .markdown-body .code-block-lang {

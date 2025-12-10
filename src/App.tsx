@@ -21,8 +21,7 @@ import { type ErrorDetails, getErrorDetails } from "@/lib/errors";
 import { applyFilters } from "@/lib/filters/regex";
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
 import { flattenToc, generateToc } from "@/lib/markdown/toc";
-import { useCallback, useMemo } from "react";
-import { useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import "./index.css";
 import "./styles/markdown.css";
 
@@ -260,7 +259,10 @@ export function App() {
       {/* Main Content Area */}
       <div className="container mx-auto flex flex-1 flex-col gap-6 px-4 py-6 lg:flex-row">
         {/* Sidebar - File List */}
-        <aside aria-label="File browser" className="w-full shrink-0 lg:w-64">
+        <aside
+          aria-label="File browser"
+          className="w-full shrink-0 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-64 lg:overflow-y-auto"
+        >
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Files</CardTitle>
@@ -305,9 +307,9 @@ export function App() {
         </aside>
 
         {/* Main Content - Markdown Viewer */}
-        <main aria-label="Document viewer" className="flex-1">
+        <main aria-label="Document viewer" className="min-w-0 flex-1">
           <Card className="min-h-[600px]">
-            <CardContent className="pt-6">
+            <CardContent className="overflow-x-auto pt-6">
               {state.isLoadingContent ? (
                 <ContentSkeleton />
               ) : state.fileContent &&
@@ -335,7 +337,7 @@ export function App() {
         </main>
 
         {/* Table of Contents */}
-        <aside className="w-full shrink-0 lg:w-64">
+        <aside className="w-full shrink-0 lg:sticky lg:top-6 lg:h-[calc(100vh-3rem)] lg:w-64 lg:overflow-y-auto">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Table of Contents</CardTitle>
