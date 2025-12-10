@@ -1,5 +1,6 @@
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorMessage } from "@/components/ErrorMessage";
+import { FileFilters } from "@/components/FileFilters";
 import { FileList } from "@/components/FileList";
 import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { RepositoryInput } from "@/components/RepositoryInput";
@@ -16,9 +17,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { applyFilters } from "@/lib/filters/regex";
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
 import { flattenToc, generateToc } from "@/lib/markdown/toc";
-import { useMemo } from "react";
+import { useCallback, useMemo } from "react";
 import { useState } from "react";
 import "./index.css";
 import "./styles/markdown.css";
@@ -32,6 +34,8 @@ type AppState = {
   isLoadingFiles: boolean;
   isLoadingContent: boolean;
   error: string | null;
+  includeFilter: string;
+  excludeFilter: string;
 };
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Component manages complex state interactions
@@ -45,6 +49,8 @@ export function App() {
     isLoadingFiles: false,
     isLoadingContent: false,
     error: null,
+    includeFilter: "",
+    excludeFilter: "",
   });
 
   const validateRepository = async (
@@ -170,6 +176,34 @@ export function App() {
     }
   };
 
+  // Filter handlers
+  const handleIncludeFilterChange = useCallback((pattern: string) => {
+    setState((prev) => ({ ...prev, includeFilter: pattern }));
+  }, []);
+
+  const handleExcludeFilterChange = useCallback((pattern: string) => {
+    setState((prev) => ({ ...prev, excludeFilter: pattern }));
+  }, []);
+
+  const handleClearFilters = useCallback(() => {
+    setState((prev) => ({
+      ...prev,
+      includeFilter: "",
+      excludeFilter: "",
+    }));
+  }, []);
+
+  // Apply filters to file list
+  const filteredFiles = useMemo(() => {
+    const result = applyFilters(
+      state.files,
+      state.includeFilter,
+      state.excludeFilter,
+      { caseSensitive: false }
+    );
+    return result.files;
+  }, [state.files, state.includeFilter, state.excludeFilter]);
+
   // Generate TOC from file content
   const toc = useMemo(() => {
     if (!state.fileContent) {
@@ -231,14 +265,30 @@ export function App() {
                   : "Markdown files in repository"}
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              {state.files.length > 0 && (
+                <FileFilters
+                  excludePattern={state.excludeFilter}
+                  filteredCount={filteredFiles.length}
+                  includePattern={state.includeFilter}
+                  onClear={handleClearFilters}
+                  onExcludeChange={handleExcludeFilterChange}
+                  onIncludeChange={handleIncludeFilterChange}
+                  totalCount={state.files.length}
+                />
+              )}
               {state.isLoadingFiles ? (
                 <FileListSkeleton />
-              ) : state.files.length > 0 ? (
+              ) : filteredFiles.length > 0 ? (
                 <FileList
-                  files={state.files}
+                  files={filteredFiles}
                   onSelectFile={handleSelectFile}
                   selectedFile={state.selectedFile || undefined}
+                />
+              ) : state.files.length > 0 ? (
+                <EmptyState
+                  message="No files match the current filters"
+                  type="no-matches"
                 />
               ) : state.repository ? (
                 <EmptyState type="no-files" />
