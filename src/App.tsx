@@ -341,6 +341,11 @@ export function App() {
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Table of Contents</CardTitle>
+              <CardDescription>
+                {toc.length > 0
+                  ? `${toc.length} headings`
+                  : "Headings in the current document"}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               {state.isLoadingContent ? (
