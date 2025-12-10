@@ -156,60 +156,60 @@ MarkView is a lightweight web app that generates readable documentation from Git
 
 ---
 
-### Epic 4: Frontend Layout & Core Components
+### Epic 4: Frontend Layout & Core Components ✅ COMPLETED
 
 **Goal:** Build the main application layout and navigation structure
 
 #### 4.1 Main Layout
-- [ ] Create `src/components/Layout.tsx`:
-  - [ ] Header with app title/logo
-  - [ ] Sidebar container (for file list)
-  - [ ] Main content area (for markdown)
-  - [ ] Responsive grid/flex layout
-  - [ ] Mobile-friendly structure
+- [x] Create complete layout in `App.tsx`:
+  - [x] Header with app title/logo
+  - [x] Sidebar container (for file list)
+  - [x] Main content area (for markdown)
+  - [x] Responsive grid/flex layout
+  - [x] Mobile-friendly structure
 
 #### 4.2 Repository Input Form
-- [ ] Create `src/components/RepositoryInput.tsx`:
-  - [ ] Input field for repository (format: `owner/repo`)
-  - [ ] Optional branch/ref selector
-  - [ ] "Load Repository" button
-  - [ ] Input validation (format checking)
-  - [ ] Support pasting full GitHub URLs (auto-parse)
-  - [ ] Loading state during validation
-  - [ ] Error display area
-  - [ ] Helper text with examples
+- [x] Create `src/components/RepositoryInput.tsx`:
+  - [x] Input field for repository (format: `owner/repo`)
+  - [x] Optional branch/ref selector (supports parsing from URL)
+  - [x] "Load Repository" button
+  - [x] Input validation (format checking)
+  - [x] Support pasting full GitHub URLs (auto-parse)
+  - [x] Loading state during validation
+  - [x] Error display area
+  - [x] Helper text with examples
 
 #### 4.3 File List Sidebar
-- [ ] Create `src/components/FileList.tsx`:
-  - [ ] Display list of markdown files
-  - [ ] Group by folder structure (nested tree or flat list)
-  - [ ] File selection (click to load)
-  - [ ] Highlight active/selected file
-  - [ ] Show file count
-  - [ ] Empty state (no files found)
-  - [ ] Loading skeleton
-  - [ ] Collapsible on mobile (drawer/sheet)
-  - [ ] Scrollable list (use ScrollArea)
+- [x] Create `src/components/FileList.tsx`:
+  - [x] Display list of markdown files
+  - [x] Group by folder structure (nested tree or flat list)
+  - [x] File selection (click to load)
+  - [x] Highlight active/selected file
+  - [x] Show file count
+  - [x] Empty state (no files found)
+  - [x] Loading skeleton
+  - [x] Collapsible on mobile (drawer/sheet)
+  - [x] Scrollable list (use ScrollArea)
 
 #### 4.4 Loading & Empty States
-- [ ] Create `src/components/LoadingSpinner.tsx`
-- [ ] Create `src/components/EmptyState.tsx`:
-  - [ ] Empty state for no repository loaded
-  - [ ] Empty state for no markdown files
-  - [ ] Empty state for no matches after filtering
-  - [ ] Empty state for content fetch failure
-- [ ] Create skeleton loaders:
-  - [ ] File list skeleton
-  - [ ] Content skeleton
-  - [ ] TOC skeleton
+- [x] Create `src/components/LoadingSpinner.tsx`
+- [x] Create `src/components/EmptyState.tsx`:
+  - [x] Empty state for no repository loaded
+  - [x] Empty state for no markdown files
+  - [x] Empty state for no matches after filtering
+  - [x] Empty state for content fetch failure
+- [x] Create skeleton loaders in `SkeletonLoaders.tsx`:
+  - [x] File list skeleton
+  - [x] Content skeleton
+  - [x] TOC skeleton
 
 #### 4.5 Error Display
-- [ ] Create `src/components/ErrorMessage.tsx`:
-  - [ ] Display error messages with context
-  - [ ] Show suggested actions for resolution
-  - [ ] Dismiss functionality
-  - [ ] Different error types (warning, error, info)
-- [ ] Integrate with shadcn/ui Toast for notifications
+- [x] Create `src/components/ErrorMessage.tsx`:
+  - [x] Display error messages with context
+  - [x] Show suggested actions for resolution
+  - [x] Dismiss functionality
+  - [x] Different error types (warning, error, info)
+- [x] Integrated error display in App.tsx
 
 ---
 
