@@ -51,8 +51,8 @@ export function FileList({ files, selectedFile, onSelectFile }: FileListProps) {
   const directories = Object.keys(groupedFiles).sort();
 
   return (
-    <ScrollArea className="h-[calc(100vh-16rem)]">
-      <div className="space-y-4 pr-4">
+    <ScrollArea className="h-[300px] lg:h-[calc(100vh-16rem)]">
+      <nav aria-label="Markdown files" className="space-y-4 pr-4">
         {directories.map((dir) => (
           <div className="space-y-1" key={dir}>
             <h3 className="px-2 font-medium text-muted-foreground text-sm">
@@ -61,9 +61,12 @@ export function FileList({ files, selectedFile, onSelectFile }: FileListProps) {
             <div className="space-y-0.5">
               {groupedFiles[dir]?.map((file) => (
                 <button
+                  aria-current={selectedFile === file.path ? "page" : undefined}
+                  aria-label={`View ${getFileName(file.path)}`}
                   className={cn(
                     "w-full rounded-md px-2 py-1.5 text-left text-sm transition-colors",
                     "hover:bg-accent hover:text-accent-foreground",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
                     selectedFile === file.path &&
                       "bg-accent font-medium text-accent-foreground"
                   )}
@@ -77,7 +80,7 @@ export function FileList({ files, selectedFile, onSelectFile }: FileListProps) {
             </div>
           </div>
         ))}
-      </div>
+      </nav>
     </ScrollArea>
   );
 }

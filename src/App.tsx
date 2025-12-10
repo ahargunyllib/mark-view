@@ -17,6 +17,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { type ErrorDetails, getErrorDetails } from "@/lib/errors";
 import { applyFilters } from "@/lib/filters/regex";
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
 import { flattenToc, generateToc } from "@/lib/markdown/toc";
@@ -33,7 +34,7 @@ type AppState = {
   isLoadingRepo: boolean;
   isLoadingFiles: boolean;
   isLoadingContent: boolean;
-  error: string | null;
+  error: ErrorDetails | null;
   includeFilter: string;
   excludeFilter: string;
 };
@@ -124,9 +125,10 @@ export function App() {
         isLoadingFiles: false,
       }));
     } catch (error) {
+      const errorDetails = getErrorDetails(error);
       setState((prev) => ({
         ...prev,
-        error: error instanceof Error ? error.message : "An error occurred",
+        error: errorDetails,
         isLoadingRepo: false,
         isLoadingFiles: false,
       }));
@@ -168,9 +170,10 @@ export function App() {
         isLoadingContent: false,
       }));
     } catch (error) {
+      const errorDetails = getErrorDetails(error);
       setState((prev) => ({
         ...prev,
-        error: error instanceof Error ? error.message : "An error occurred",
+        error: errorDetails,
         isLoadingContent: false,
       }));
     }
@@ -244,8 +247,10 @@ export function App() {
           {state.error && (
             <div className="mt-3">
               <ErrorMessage
-                message={state.error}
+                message={state.error.message}
                 onDismiss={() => setState((prev) => ({ ...prev, error: null }))}
+                suggestion={state.error.suggestion}
+                type={state.error.type}
               />
             </div>
           )}
@@ -253,9 +258,9 @@ export function App() {
       </div>
 
       {/* Main Content Area */}
-      <div className="container mx-auto flex flex-1 gap-6 px-4 py-6">
+      <div className="container mx-auto flex flex-1 flex-col gap-6 px-4 py-6 lg:flex-row">
         {/* Sidebar - File List */}
-        <aside className="w-64 shrink-0">
+        <aside aria-label="File browser" className="w-full shrink-0 lg:w-64">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Files</CardTitle>
@@ -300,7 +305,7 @@ export function App() {
         </aside>
 
         {/* Main Content - Markdown Viewer */}
-        <main className="flex-1">
+        <main aria-label="Document viewer" className="flex-1">
           <Card className="min-h-[600px]">
             <CardContent className="pt-6">
               {state.isLoadingContent ? (
@@ -330,7 +335,7 @@ export function App() {
         </main>
 
         {/* Table of Contents */}
-        <aside className="w-64 shrink-0">
+        <aside className="w-full shrink-0 lg:w-64">
           <Card>
             <CardHeader>
               <CardTitle className="text-base">Table of Contents</CardTitle>

@@ -42,7 +42,8 @@ function TocItemComponent({
   return (
     <li>
       <a
-        className={`block py-1.5 text-sm transition-colors ${isActive ? "font-medium text-primary" : "text-muted-foreground hover:text-foreground"}
+        aria-current={isActive ? "location" : undefined}
+        className={`block rounded-md py-1.5 text-sm transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 ${isActive ? "font-medium text-primary" : "text-muted-foreground hover:text-foreground"}
           ${item.level === 1 ? "pl-0" : ""}
           ${item.level === 2 ? "pl-4" : ""}
           ${item.level === 3 ? "pl-8" : ""}
@@ -83,7 +84,7 @@ export function TableOfContents({
   }
 
   return (
-    <ScrollArea className="h-[calc(100vh-12rem)]">
+    <ScrollArea className="h-[300px] lg:h-[calc(100vh-12rem)]">
       <nav aria-label="Table of contents">
         <ul className="space-y-0">
           {toc.map((item) => (

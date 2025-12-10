@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { validateRefInput, validateRepositoryInput } from "@/lib/errors";
 import { useState } from "react";
 
 type RepositoryInputProps = {
@@ -10,7 +11,6 @@ type RepositoryInputProps = {
 
 const URL_PATTERN =
   /^https:\/\/github\.com\/([^/]+)\/([^/]+)(?:\/tree\/([^/]+))?/;
-const SIMPLE_PATTERN = /^([a-zA-Z0-9_-]+)\/([a-zA-Z0-9_.-]+)$/;
 
 /**
  * Parse GitHub repository URL or owner/repo format
@@ -39,16 +39,21 @@ function parseRepositoryInput(input: string): {
     return null;
   }
 
-  // Handle owner/repo format
-  const match = trimmed.match(SIMPLE_PATTERN);
-  if (match?.[1] && match[2]) {
-    return {
-      owner: match[1],
-      repo: match[2],
-    };
+  // Handle owner/repo format - validate first
+  const validation = validateRepositoryInput(trimmed);
+  if (!validation.valid) {
+    return null;
   }
 
-  return null;
+  const [owner, repo] = trimmed.split("/");
+  if (!(owner && repo)) {
+    return null;
+  }
+
+  return {
+    owner,
+    repo,
+  };
 }
 
 export function RepositoryInput({
@@ -64,8 +69,27 @@ export function RepositoryInput({
 
     const parsed = parseRepositoryInput(input);
     if (!parsed) {
-      setError("Invalid format. Use 'owner/repo' or paste a GitHub URL.");
+      // Get specific validation error
+      const trimmed = input.trim();
+      if (trimmed.startsWith("https://github.com/")) {
+        setError("Invalid GitHub URL format.");
+      } else {
+        const validation = validateRepositoryInput(trimmed);
+        setError(
+          validation.error ||
+            "Invalid format. Use 'owner/repo' or paste a GitHub URL."
+        );
+      }
       return;
+    }
+
+    // Validate ref if provided
+    if (parsed.ref) {
+      const refValidation = validateRefInput(parsed.ref);
+      if (!refValidation.valid) {
+        setError(refValidation.error || "Invalid branch/ref format.");
+        return;
+      }
     }
 
     onLoadRepository(parsed.owner, parsed.repo, parsed.ref);
