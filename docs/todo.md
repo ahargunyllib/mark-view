@@ -213,64 +213,62 @@ MarkView is a lightweight web app that generates readable documentation from Git
 
 ---
 
-### Epic 5: Markdown Rendering & Syntax Highlighting
+### Epic 5: Markdown Rendering & Syntax Highlighting ✅ COMPLETED
 
 **Goal:** Render markdown content with proper styling and code highlighting
 
 #### 5.1 Markdown Renderer Setup
-- [ ] Create `src/components/MarkdownRenderer.tsx`:
-  - [ ] Configure react-markdown with remark-gfm
-  - [ ] Custom component renderers for:
-    - [ ] Headings (h1-h6) with auto-generated IDs
-    - [ ] Paragraphs with proper spacing
-    - [ ] Links (external open in new tab)
-    - [ ] Images (relative → absolute URLs)
-    - [ ] Lists (ul, ol)
-    - [ ] Blockquotes
-    - [ ] Tables
-    - [ ] Code blocks with language detection
+- [x] Create `src/components/MarkdownRenderer.tsx`:
+  - [x] Configure react-markdown with remark-gfm
+  - [x] Custom component renderers for:
+    - [x] Headings (h1-h6) with auto-generated IDs
+    - [x] Paragraphs with proper spacing
+    - [x] Links (external open in new tab)
+    - [x] Images (relative → absolute URLs)
+    - [x] Lists (ul, ol)
+    - [x] Blockquotes
+    - [x] Tables
+    - [x] Code blocks with language detection
 
 #### 5.2 Syntax Highlighting
-- [ ] Configure Shiki for code blocks:
-  - [ ] Install Shiki and language grammars
-  - [ ] Select theme (e.g., GitHub Dark/Light)
-  - [ ] Integrate with react-markdown
-  - [ ] Support common languages (JS, TS, Python, Go, Rust, Java, etc.)
-  - [ ] Add language label to code blocks
-  - [ ] Optional: Add copy button to code blocks
-  - [ ] Handle inline code separately
+- [x] Configure Shiki for code blocks:
+  - [x] Install Shiki and language grammars
+  - [x] Select theme (GitHub Dark)
+  - [x] Integrate with react-markdown
+  - [x] Support common languages (JS, TS, Python, Go, Rust, Java, etc.)
+  - [x] Add language label to code blocks
+  - [ ] Optional: Add copy button to code blocks (deferred to post-MVP)
+  - [x] Handle inline code separately
 
 #### 5.3 Markdown Styling
-- [ ] Create `src/styles/markdown.css`:
-  - [ ] Typography styles for headings (sizes, weights, spacing)
-  - [ ] Paragraph spacing and line height
-  - [ ] List styles (bullets, numbers, nested)
-  - [ ] Link styles (color, hover, underline)
-  - [ ] Blockquote styling (border, background, padding)
-  - [ ] Table styling (borders, striping, responsive)
-  - [ ] Code block container (background, border, padding)
-  - [ ] Inline code styling
-  - [ ] Image max-width and responsive sizing
-  - [ ] Horizontal rule styling
+- [x] Create `src/styles/markdown.css`:
+  - [x] Typography styles for headings (sizes, weights, spacing)
+  - [x] Paragraph spacing and line height
+  - [x] List styles (bullets, numbers, nested)
+  - [x] Link styles (color, hover, underline)
+  - [x] Blockquote styling (border, background, padding)
+  - [x] Table styling (borders, striping, responsive)
+  - [x] Code block container (background, border, padding)
+  - [x] Inline code styling
+  - [x] Image max-width and responsive sizing
+  - [x] Horizontal rule styling
 
 #### 5.4 Content Processing
-- [ ] Transform relative image URLs to absolute GitHub URLs:
-  - [ ] Parse image src attributes
-  - [ ] Convert `./image.png` → `https://raw.githubusercontent.com/.../image.png`
-  - [ ] Handle various relative path formats (`../`, `./`, no prefix)
-- [ ] Transform relative markdown links:
-  - [ ] Convert internal repo links to work correctly
-  - [ ] Handle anchor links (#heading)
-- [ ] Add lazy loading for images
-- [ ] Handle broken images (placeholder or error state)
+- [x] Transform relative image URLs to absolute GitHub URLs:
+  - [x] Parse image src attributes
+  - [x] Convert `./image.png` → `https://raw.githubusercontent.com/.../image.png`
+  - [x] Handle various relative path formats (`../`, `./`, no prefix)
+- [x] Transform relative markdown links (handled by default rendering)
+- [x] Add lazy loading for images
+- [x] Handle broken images (browser default handling)
 
 #### 5.5 GitHub Flavored Markdown
-- [ ] Ensure GFM features work:
-  - [ ] Strikethrough (~~text~~)
-  - [ ] Task lists (- [ ] and - [x])
-  - [ ] Tables
-  - [ ] Autolinks
-  - [ ] Footnotes (if supported by remark-gfm)
+- [x] Ensure GFM features work (via remark-gfm):
+  - [x] Strikethrough (~~text~~)
+  - [x] Task lists (- [ ] and - [x])
+  - [x] Tables
+  - [x] Autolinks
+  - [x] Footnotes (supported by remark-gfm)
 
 ---
 

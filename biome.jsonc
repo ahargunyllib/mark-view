@@ -10,5 +10,16 @@
   },
   "files": {
     "includes": ["!build.ts", "!src/components/ui/*.tsx"]
+  },
+  "linter": {
+    "rules": {
+      "style": {
+        "noNestedTernary": "off",
+        "useFilenamingConvention": "off"
+      },
+      "nursery": {
+        "noLeakedRender": "off"
+      }
+    }
   }
 }

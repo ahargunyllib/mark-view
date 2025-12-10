@@ -1,6 +1,7 @@
 import { EmptyState } from "@/components/EmptyState";
 import { ErrorMessage } from "@/components/ErrorMessage";
 import { FileList } from "@/components/FileList";
+import { MarkdownRenderer } from "@/components/MarkdownRenderer";
 import { RepositoryInput } from "@/components/RepositoryInput";
 import {
   ContentSkeleton,
@@ -16,6 +17,7 @@ import {
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
 import { useState } from "react";
 import "./index.css";
+import "./styles/markdown.css";
 
 type AppState = {
   repository: RepositoryMetadata | null;
@@ -28,6 +30,7 @@ type AppState = {
   error: string | null;
 };
 
+// biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Component manages complex state interactions
 export function App() {
   const [state, setState] = useState<AppState>({
     repository: null,
@@ -39,6 +42,46 @@ export function App() {
     isLoadingContent: false,
     error: null,
   });
+
+  const validateRepository = async (
+    owner: string,
+    repo: string,
+    ref?: string
+  ) => {
+    const response = await fetch("/api/repository/validate", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ owner, repo, ref }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to validate repository");
+    }
+
+    const data = await response.json();
+    return data.data;
+  };
+
+  const fetchRepositoryFiles = async (
+    owner: string,
+    repo: string,
+    ref?: string
+  ) => {
+    const response = await fetch("/api/repository/files", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ owner, repo, ref }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || "Failed to fetch files");
+    }
+
+    const data = await response.json();
+    return data.data;
+  };
 
   const handleLoadRepository = async (
     owner: string,
@@ -57,41 +100,17 @@ export function App() {
     }));
 
     try {
-      // Validate repository
-      const repoResponse = await fetch("/api/repository/validate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ owner, repo, ref }),
-      });
-
-      if (!repoResponse.ok) {
-        const errorData = await repoResponse.json();
-        throw new Error(errorData.message || "Failed to validate repository");
-      }
-
-      const repoData = await repoResponse.json();
+      const repository = await validateRepository(owner, repo, ref);
       setState((prev) => ({
         ...prev,
-        repository: repoData.data,
+        repository,
         isLoadingRepo: false,
       }));
 
-      // Fetch files
-      const filesResponse = await fetch("/api/repository/files", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ owner, repo, ref }),
-      });
-
-      if (!filesResponse.ok) {
-        const errorData = await filesResponse.json();
-        throw new Error(errorData.message || "Failed to fetch files");
-      }
-
-      const filesData = await filesResponse.json();
+      const files = await fetchRepositoryFiles(owner, repo, ref);
       setState((prev) => ({
         ...prev,
-        files: filesData.data,
+        files,
         isLoadingFiles: false,
       }));
     } catch (error) {
@@ -167,14 +186,14 @@ export function App() {
             isLoading={state.isLoadingRepo}
             onLoadRepository={handleLoadRepository}
           />
-          {state.error ? (
+          {state.error && (
             <div className="mt-3">
               <ErrorMessage
                 message={state.error}
                 onDismiss={() => setState((prev) => ({ ...prev, error: null }))}
               />
             </div>
-          ) : null}
+          )}
         </div>
       </div>
 
@@ -194,14 +213,12 @@ export function App() {
             <CardContent>
               {state.isLoadingFiles ? (
                 <FileListSkeleton />
-                // biome-ignore lint/style/noNestedTernary: TODO
               ) : state.files.length > 0 ? (
                 <FileList
                   files={state.files}
                   onSelectFile={handleSelectFile}
                   selectedFile={state.selectedFile || undefined}
                 />
-                // biome-ignore lint/style/noNestedTernary: TODO
               ) : state.repository ? (
                 <EmptyState type="no-files" />
               ) : (
@@ -217,11 +234,16 @@ export function App() {
             <CardContent className="pt-6">
               {state.isLoadingContent ? (
                 <ContentSkeleton />
-                // biome-ignore lint/style/noNestedTernary: TODO
-              ) : state.fileContent ? (
-                <div className="prose prose-neutral dark:prose-invert max-w-none">
-                  <pre className="whitespace-pre-wrap">{state.fileContent}</pre>
-                </div>
+              ) : state.fileContent &&
+                state.repository &&
+                state.selectedFile ? (
+                <MarkdownRenderer
+                  content={state.fileContent || ""}
+                  owner={state.repository?.owner || ""}
+                  path={state.selectedFile || ""}
+                  ref={state.repository?.defaultBranch || "main"}
+                  repo={state.repository?.name || ""}
+                />
               ) : (
                 <EmptyState
                   message={

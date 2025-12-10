@@ -1,0 +1,229 @@
+/**
+ * Markdown Content Styles
+ * GitHub-style markdown rendering
+ */
+
+.markdown-body {
+  font-size: 16px;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* Headings */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  margin-top: 24px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.markdown-body h1 {
+  font-size: 2em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.markdown-body h2 {
+  font-size: 1.5em;
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.markdown-body h3 {
+  font-size: 1.25em;
+}
+
+.markdown-body h4 {
+  font-size: 1em;
+}
+
+.markdown-body h5 {
+  font-size: 0.875em;
+}
+
+.markdown-body h6 {
+  font-size: 0.85em;
+  color: hsl(var(--muted-foreground));
+}
+
+/* Paragraphs */
+.markdown-body p {
+  margin-top: 0;
+  margin-bottom: 16px;
+}
+
+/* Links */
+.markdown-body a {
+  color: hsl(var(--primary));
+  text-decoration: none;
+}
+
+.markdown-body a:hover {
+  text-decoration: underline;
+}
+
+/* Lists */
+.markdown-body ul,
+.markdown-body ol {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding-left: 2em;
+}
+
+.markdown-body li {
+  margin-top: 0.25em;
+}
+
+.markdown-body li > p {
+  margin-top: 16px;
+}
+
+.markdown-body li + li {
+  margin-top: 0.25em;
+}
+
+/* Blockquotes */
+.markdown-body blockquote {
+  margin: 0 0 16px 0;
+  padding: 0 1em;
+  color: hsl(var(--muted-foreground));
+  border-left: 0.25em solid hsl(var(--border));
+}
+
+.markdown-body blockquote > :first-child {
+  margin-top: 0;
+}
+
+.markdown-body blockquote > :last-child {
+  margin-bottom: 0;
+}
+
+/* Code */
+.markdown-body code {
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  background-color: hsl(var(--muted));
+  border-radius: 6px;
+  font-family:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+}
+
+.markdown-body pre {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding: 16px;
+  overflow: auto;
+  font-size: 85%;
+  line-height: 1.45;
+  background-color: hsl(var(--muted));
+  border-radius: 6px;
+}
+
+.markdown-body pre code {
+  display: inline;
+  max-width: auto;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+  line-height: inherit;
+  word-wrap: normal;
+  background-color: transparent;
+  border: 0;
+}
+
+/* Code blocks with language label */
+.markdown-body .code-block {
+  position: relative;
+  margin-bottom: 16px;
+}
+
+.markdown-body .code-block-lang {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.2em 0.6em;
+  font-size: 12px;
+  color: hsl(var(--muted-foreground));
+  background-color: hsl(var(--muted));
+  border-bottom-left-radius: 6px;
+  text-transform: uppercase;
+  font-family: ui-monospace, monospace;
+}
+
+.markdown-body .code-block pre {
+  margin-top: 0;
+}
+
+/* Tables */
+.markdown-body table {
+  width: 100%;
+  margin-bottom: 16px;
+  border-spacing: 0;
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+}
+
+.markdown-body table tr {
+  background-color: hsl(var(--background));
+  border-top: 1px solid hsl(var(--border));
+}
+
+.markdown-body table tr:nth-child(2n) {
+  background-color: hsl(var(--muted) / 0.5);
+}
+
+.markdown-body table th,
+.markdown-body table td {
+  padding: 6px 13px;
+  border: 1px solid hsl(var(--border));
+}
+
+.markdown-body table th {
+  font-weight: 600;
+  background-color: hsl(var(--muted));
+}
+
+/* Horizontal rule */
+.markdown-body hr {
+  height: 0.25em;
+  padding: 0;
+  margin: 24px 0;
+  background-color: hsl(var(--border));
+  border: 0;
+}
+
+/* Images */
+.markdown-body img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  box-sizing: content-box;
+}
+
+/* Task lists */
+.markdown-body input[type="checkbox"] {
+  margin-right: 0.5em;
+}
+
+/* Strikethrough */
+.markdown-body del {
+  text-decoration: line-through;
+}
+
+/* First element margin reset */
+.markdown-body > *:first-child {
+  margin-top: 0 !important;
+}
+
+/* Last element margin reset */
+.markdown-body > *:last-child {
+  margin-bottom: 0 !important;
+}
