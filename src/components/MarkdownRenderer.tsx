@@ -5,6 +5,7 @@ import {
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import remarkGfm from "remark-gfm";
+import remarkGithubBlockquoteAdmonitions from "remark-github-beta-blockquote-admonitions";
 
 const TRAILING_NEWLINE_REGEX = /\n$/;
 const LANGUAGE_CLASS_REGEX = /language-(\w+)/;
@@ -143,7 +144,7 @@ export function MarkdownRenderer({
           },
         }}
         rehypePlugins={[rehypeRaw]}
-        remarkPlugins={[remarkGfm]}
+        remarkPlugins={[remarkGfm, remarkGithubBlockquoteAdmonitions]}
       >
         {content}
       </ReactMarkdown>
