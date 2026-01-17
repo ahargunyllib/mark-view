@@ -1,5 +1,5 @@
 import type { TocItem } from "@/lib/markdown/toc";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 type TableOfContentsProps = {
   toc: TocItem[];
@@ -113,6 +113,10 @@ export function useScrollSpy(
   const [activeId, setActiveId] = useState<string | undefined>();
   const { rootMargin = "-20% 0px -35% 0px" } = options;
 
+  // Convert array to primitive key to prevent unnecessary re-renders
+  const headingIdsKey = useMemo(() => headingIds.join(","), [headingIds]);
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive
   useEffect(() => {
     if (headingIds.length === 0) {
       return;
@@ -159,7 +163,7 @@ export function useScrollSpy(
     return () => {
       observer.disconnect();
     };
-  }, [headingIds, rootMargin]);
+  }, [headingIdsKey, rootMargin, headingIds]);
 
   return activeId;
 }

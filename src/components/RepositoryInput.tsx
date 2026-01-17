@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { validateRefInput, validateRepositoryInput } from "@/lib/errors";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type RepositoryInputProps = {
   onLoadRepository: (owner: string, repo: string, ref?: string) => void;
@@ -64,6 +64,10 @@ export function RepositoryInput({
 }: RepositoryInputProps) {
   const [input, setInput] = useState(initialValue);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    setInput(initialValue);
+  }, [initialValue]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

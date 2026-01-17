@@ -1,5 +1,6 @@
 import type { MarkdownFile } from "@/lib/github";
 import { cn } from "@/lib/utils";
+import { useMemo } from "react";
 
 type FileListProps = {
   files: MarkdownFile[];
@@ -46,8 +47,12 @@ function groupFilesByDirectory(
 }
 
 export function FileList({ files, selectedFile, onSelectFile }: FileListProps) {
-  const groupedFiles = groupFilesByDirectory(files);
-  const directories = Object.keys(groupedFiles).sort();
+  // Memoize grouping operation to prevent recalculation on every render
+  const groupedFiles = useMemo(() => groupFilesByDirectory(files), [files]);
+  const directories = useMemo(
+    () => Object.keys(groupedFiles).sort(),
+    [groupedFiles]
+  );
 
   return (
     <nav aria-label="Markdown files" className="space-y-4 pr-4">

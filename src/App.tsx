@@ -135,12 +135,11 @@ export function App() {
     }));
 
     try {
-      const repository = await validateRepository(owner, repo, ref);
-      setState((prev) => ({
-        ...prev,
-        repository,
-        isLoadingRepo: false,
-      }));
+      // Parallelize repository validation and file fetching for better performance
+      const [repository, files] = await Promise.all([
+        validateRepository(owner, repo, ref),
+        fetchRepositoryFiles(owner, repo, ref),
+      ]);
 
       // Update URL to reflect loaded repository
       const newPath = `/${owner}/${repo}`;
@@ -148,10 +147,11 @@ export function App() {
         window.history.pushState({}, "", newPath);
       }
 
-      const files = await fetchRepositoryFiles(owner, repo, ref);
       setState((prev) => ({
         ...prev,
+        repository,
         files,
+        isLoadingRepo: false,
         isLoadingFiles: false,
       }));
     } catch (error) {
