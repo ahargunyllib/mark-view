@@ -243,8 +243,11 @@ export class GitHubClient {
       throw new GitHubAPIError("File content is not base64 encoded");
     }
 
-    // Decode base64 content
-    const decodedContent = atob(data.content.replace(/\n/g, ""));
+    // Decode base64 content with proper UTF-8 handling
+    const decodedContent = Buffer.from(
+      data.content.replace(/\n/g, ""),
+      "base64"
+    ).toString("utf-8");
 
     return {
       path: data.path,
