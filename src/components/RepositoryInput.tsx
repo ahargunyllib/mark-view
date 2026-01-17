@@ -7,6 +7,7 @@ import { useState } from "react";
 type RepositoryInputProps = {
   onLoadRepository: (owner: string, repo: string, ref?: string) => void;
   isLoading?: boolean;
+  initialValue?: string;
 };
 
 const URL_PATTERN =
@@ -59,8 +60,9 @@ function parseRepositoryInput(input: string): {
 export function RepositoryInput({
   onLoadRepository,
   isLoading = false,
+  initialValue = "",
 }: RepositoryInputProps) {
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState(initialValue);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = (e: React.FormEvent) => {

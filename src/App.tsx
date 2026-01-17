@@ -21,7 +21,7 @@ import { type ErrorDetails, getErrorDetails } from "@/lib/errors";
 import { applyFilters } from "@/lib/filters/regex";
 import type { MarkdownFile, RepositoryMetadata } from "@/lib/github";
 import { flattenToc, generateToc } from "@/lib/markdown/toc";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import "./index.css";
 import "./styles/markdown.css";
 
@@ -37,6 +37,31 @@ type AppState = {
   includeFilter: string;
   excludeFilter: string;
 };
+
+/**
+ * Parse URL path for /{org}/{repo} pattern
+ * Returns { owner, repo } if valid, null otherwise
+ */
+function parseUrlPath(
+  pathname: string
+): { owner: string; repo: string } | null {
+  // Remove leading/trailing slashes and split
+  const parts = pathname.replace(/^\/|\/$/g, "").split("/");
+
+  // Should be exactly 2 parts: org and repo
+  if (parts.length !== 2) {
+    return null;
+  }
+
+  const [owner, repo] = parts;
+
+  // Validate both parts exist and are non-empty
+  if (!(owner && repo) || owner.trim() === "" || repo.trim() === "") {
+    return null;
+  }
+
+  return { owner, repo };
+}
 
 // biome-ignore lint/complexity/noExcessiveCognitiveComplexity: Component manages complex state interactions
 export function App() {
@@ -117,6 +142,12 @@ export function App() {
         isLoadingRepo: false,
       }));
 
+      // Update URL to reflect loaded repository
+      const newPath = `/${owner}/${repo}`;
+      if (window.location.pathname !== newPath) {
+        window.history.pushState({}, "", newPath);
+      }
+
       const files = await fetchRepositoryFiles(owner, repo, ref);
       setState((prev) => ({
         ...prev,
@@ -195,6 +226,16 @@ export function App() {
     }));
   }, []);
 
+  // Load repository from URL path on initial mount
+  // biome-ignore lint/correctness/useExhaustiveDependencies: false positive
+  useEffect(() => {
+    const parsed = parseUrlPath(window.location.pathname);
+    if (parsed) {
+      handleLoadRepository(parsed.owner, parsed.repo);
+    }
+    // Only run on mount
+  }, []);
+
   // Apply filters to file list
   const filteredFiles = useMemo(() => {
     const result = applyFilters(
@@ -240,6 +281,11 @@ export function App() {
       <div className="border-b bg-muted/50">
         <div className="container mx-auto space-y-2 px-4 py-4">
           <RepositoryInput
+            initialValue={
+              state.repository
+                ? `${state.repository.owner}/${state.repository.name}`
+                : ""
+            }
             isLoading={state.isLoadingRepo}
             onLoadRepository={handleLoadRepository}
           />
