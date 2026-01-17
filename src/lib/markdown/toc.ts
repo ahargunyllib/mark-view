@@ -43,7 +43,7 @@ function generateUniqueId(text: string, existingIds: Set<string>): string {
  * Parse markdown content and extract headings
  * Returns flat array of headings with metadata
  */
-export function extractHeadings(markdown: string): TocItem[] {
+function extractHeadings(markdown: string): TocItem[] {
   const headings: TocItem[] = [];
   const existingIds = new Set<string>();
 
@@ -80,7 +80,7 @@ export function extractHeadings(markdown: string): TocItem[] {
 /**
  * Build nested TOC structure from flat headings array
  */
-export function buildTocTree(headings: TocItem[]): TocItem[] {
+function buildTocTree(headings: TocItem[]): TocItem[] {
   if (headings.length === 0) {
     return [];
   }

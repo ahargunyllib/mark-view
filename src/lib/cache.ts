@@ -59,66 +59,6 @@ class AppCache {
   set<T>(key: string, value: T): void {
     this.cache.set(key, value);
   }
-
-  /**
-   * Check if key exists in cache
-   */
-  has(key: string): boolean {
-    return this.cache.has(key);
-  }
-
-  /**
-   * Delete specific key from cache
-   */
-  delete(key: string): boolean {
-    return this.cache.delete(key);
-  }
-
-  /**
-   * Clear all cache entries
-   */
-  clear(): void {
-    this.cache.clear();
-  }
-
-  /**
-   * Get cache statistics
-   */
-  getStats() {
-    return {
-      size: this.cache.size,
-      calculatedSize: this.cache.calculatedSize,
-      max: this.cache.max,
-      maxSize: this.cache.maxSize,
-    };
-  }
-
-  /**
-   * Invalidate cache for a specific repository
-   */
-  invalidateRepository(owner: string, repo: string): void {
-    const prefix = `${owner}/${repo}`;
-    const keysToDelete: string[] = [];
-
-    // Find all keys related to this repository
-    for (const key of this.cache.keys()) {
-      if (key.includes(prefix)) {
-        keysToDelete.push(key);
-      }
-    }
-
-    // Delete all matching keys
-    for (const key of keysToDelete) {
-      this.cache.delete(key);
-    }
-  }
-
-  /**
-   * Get all cache keys (for debugging)
-   */
-  keys(): string[] {
-    return Array.from(this.cache.keys());
-  }
 }
 
 /**

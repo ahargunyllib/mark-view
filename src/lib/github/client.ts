@@ -267,20 +267,6 @@ export class GitHubClient {
       used: data.rate.used,
     };
   }
-
-  /**
-   * Clear ETag cache
-   */
-  clearCache(): void {
-    this.etagCache.clear();
-  }
-
-  /**
-   * Get cache size
-   */
-  getCacheSize(): number {
-    return this.etagCache.size;
-  }
 }
 
 /**

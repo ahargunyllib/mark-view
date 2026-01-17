@@ -38,7 +38,7 @@ export function validateRegex(pattern: string): {
 /**
  * Apply include filter (files matching the pattern)
  */
-export function applyIncludeFilter(
+function applyIncludeFilter(
   files: MarkdownFile[],
   pattern: string,
   options: FilterOptions = {}
@@ -65,7 +65,7 @@ export function applyIncludeFilter(
 /**
  * Apply exclude filter (files NOT matching the pattern)
  */
-export function applyExcludeFilter(
+function applyExcludeFilter(
   files: MarkdownFile[],
   pattern: string,
   options: FilterOptions = {}

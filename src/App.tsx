@@ -313,13 +313,7 @@ export function App() {
               ) : state.fileContent &&
                 state.repository &&
                 state.selectedFile ? (
-                <MarkdownRenderer
-                  content={state.fileContent || ""}
-                  owner={state.repository?.owner || ""}
-                  path={state.selectedFile || ""}
-                  ref={state.repository?.defaultBranch || "main"}
-                  repo={state.repository?.name || ""}
-                />
+                <MarkdownRenderer content={state.fileContent || ""} />
               ) : (
                 <EmptyState
                   message={

@@ -141,19 +141,6 @@ export function validateRequiredFields<T extends Record<string, unknown>>(
 }
 
 /**
- * Add cache headers to response
- */
-export function addCacheHeaders(response: Response, maxAge: number): Response {
-  const headers = new Headers(response.headers);
-  headers.set("Cache-Control", `public, max-age=${maxAge}`);
-  return new Response(response.body, {
-    status: response.status,
-    statusText: response.statusText,
-    headers,
-  });
-}
-
-/**
  * Log API request
  */
 export function logRequest(method: string, path: string, body?: unknown): void {
